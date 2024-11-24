@@ -1,0 +1,18 @@
+apiVersion: 1
+
+datasources:
+  - name: influxdb
+    type: influxdb
+    access: proxy
+    isDefault: true
+    url: http://influxdb:8086
+    basicAuth: true
+    basicAuthUser: jetson-gmi
+    basicAuthPassword: 12345678
+    jsonData:
+      organization: cairo
+      defaultBucket: bucket1
+      version: Flux
+    secureJsonData:
+      token: lmSuJ5EyZ6g1oGKl_RlmBtou_WUCRoPFMbhqLYzGxf3U1JTCWt_B1cWeHYKXOztbDzm3blB2MJmfunrgORAgWA==
+    uid: "fe4t7dbi2ysqod"
