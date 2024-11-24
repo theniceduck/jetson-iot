@@ -4,9 +4,9 @@ import requests
 from ultralytics import YOLO
 
 # ESP32 IP and endpoint
-esp32_ip = "http://127.0.0.1"  # Replace with your ESP32's IP address
-led_on_url = f"{esp32_ip}:5000/ledon"
-led_off_url = f"{esp32_ip}:5000/ledoff"
+esp32_ip = os.getenv('ESP32_IP')  # Use environment variable for ESP32's IP address
+led_on_url = f"{esp32_ip}/ledon"
+led_off_url = f"{esp32_ip}/ledoff"
 
 # Load YOLOv8 model
 model = YOLO('yolov8n.pt')
