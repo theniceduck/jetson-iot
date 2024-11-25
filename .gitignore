@@ -1,3 +1,6 @@
 .env
 esp32.ino
 esp32_token
+/ignore
+/esp32/mock_esp32
+/jupyter/notebooks

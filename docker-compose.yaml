@@ -17,6 +17,8 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
+    depends_on:
+      - influxdb
     ports:
       - "${GF_PORT}:3000"
     environment:
@@ -26,12 +28,28 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
 
-  mock-esp32:
+  jupyter:
     build:
-      context: ./esp32/mock_esp32
-    container_name: mock-esp32
+      context: ./jupyter
+    container_name: jupyter
     ports:
-      - "5000:5000"
+      - "8888:8888"
+    volumes:
+      - ./jupyter/notebooks:/home/jupyter/notebooks
+      - ./arduino:/home/jupyter/.arduino15
+    environment:
+      - ARDUINO_CLI_CONFIG=/home/jupyter/.arduino15/arduino-cli.yaml
+    command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/home/jupyter/notebooks"]
+
+  yolov8:
+    build:
+      context: ./yolo
+    container_name: yolov8
+    volumes:
+      - ./yolo:/app
+    environment:
+      - ESP32_IP=http://${ESP32_IP}:${ESP32_PORT}
+    command: ["python3", "/app/yolov8_detection.py"]
 
 volumes:
   influxdb_data:
