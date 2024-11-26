@@ -1,0 +1,34 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// Blynk credentials (Don't remove "")
+#define BLYNK_TEMPLATE_ID "your_template_id"
+#define BLYNK_TEMPLATE_NAME "your_template_name"
+#define BLYNK_AUTH_TOKEN "your_auth_token"
+
+// WiFi credentials (Don't remove "")
+#define WIFI_SSID "your_wifi_ssid"
+#define WIFI_PASSWORD "your_wifi_password"
+
+// InfluxDB configuration (Don't remove "")
+#define INFLUXDB_URL "your_influxdb_url"
+#define INFLUXDB_TOKEN "your_influxdb_token"
+#define INFLUXDB_ORG "your_org"
+#define INFLUXDB_BUCKET "your_bucket"
+
+// Pin definitions (remove <> too)
+#define LED_PIN <set_led_pin>
+#define BUZZER_PIN <set_buzzer_pin>
+#define DHT_PIN <set_dht_pin>
+
+// Virtual pin definitions (remove <> too)
+#define VirtElapsedTime <virtual_pin_elapsed_time>
+#define VirtLed <virtual_pin_led>
+#define VirtTemp <virtual_pin_temperature>
+#define VirtHum <virtual_pin_humidity>
+#define VirtBuzz <virtual_pin_buzzer>
+
+// Web server port (remove <> too)
+#define WebServerPort <your_desired_port>
+
+#endif 
