@@ -37,6 +37,8 @@ services:
     volumes:
       - ./jupyter/notebooks:/home/jupyter/notebooks
       - ./arduino:/home/jupyter/.arduino15
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
     environment:
       - ARDUINO_CLI_CONFIG=/home/jupyter/.arduino15/arduino-cli.yaml
     command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/home/jupyter/notebooks"]

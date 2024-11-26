@@ -7,11 +7,11 @@ datasources:
     isDefault: true
     url: http://influxdb:8086
     basicAuth: true
-    basicAuthUser: jetson-gmi
-    basicAuthPassword: 12345678
+    basicAuthUser: admin
+    basicAuthPassword: password
     jsonData:
       organization: cairo
-      defaultBucket: bucket1
+      defaultBucket: jetson
       version: Flux
     secureJsonData:
       token: lmSuJ5EyZ6g1oGKl_RlmBtou_WUCRoPFMbhqLYzGxf3U1JTCWt_B1cWeHYKXOztbDzm3blB2MJmfunrgORAgWA==
