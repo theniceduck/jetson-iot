@@ -13,8 +13,9 @@
        ```
      - **Mac**: Double-click the file to extract it.
 
-2. **Change the Value of `.env`**:
-   - Open the `.env` file in a text editor and update the necessary environment variables.
+2. **Rename and Update the `.env` File**:
+   - Copy the `.env.example` file and rename it to `.env`.
+   - Open the newly created `.env` file in a text editor and update the necessary environment variables.
 
 3. **Install Docker and Docker Compose**:
    - For **Windows** and **Mac**, download and install [Docker Desktop](https://www.docker.com/products/docker-desktop).
