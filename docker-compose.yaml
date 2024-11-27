@@ -1,16 +1,9 @@
 services:
   influxdb:
-    image: influxdb:2.7
+    image: influxdb:latest
     container_name: influxdb
     ports:
-      - "${INFLUXDB_PORT}:8086"
-    environment:
-      - DOCKER_INFLUXDB_INIT_MODE=setup
-      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USER}
-      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASS}
-      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
-      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
-      - INFLUXDB_REPORTING_DISABLED=true
+      - "8086:8086"
     volumes:
       - influxdb_data:/var/lib/influxdb2
 
@@ -20,10 +13,7 @@ services:
     depends_on:
       - influxdb
     ports:
-      - "${GF_PORT}:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GF_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_PASS}
+      - "3000:3000"
     volumes:
       - grafana_data:/var/lib/grafana
 
@@ -34,13 +24,13 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./jupyter/notebooks:/home/jupyter/notebooks
-      - ./arduino:/home/jupyter/.arduino15
+      - ./:/home/jovyan/work
+      - ./arduino:/home/jovyan/.arduino15
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
     environment:
       - ARDUINO_CLI_CONFIG=/home/jupyter/.arduino15/arduino-cli.yaml
-    command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/home/jupyter/notebooks"]
+    command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/home/jovyan/work"]
 
 volumes:
   influxdb_data:

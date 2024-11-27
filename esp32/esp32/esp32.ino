@@ -29,6 +29,7 @@ void setup() {
 
   Blynk.begin(BLYNK_AUTH_TOKEN, WIFI_SSID, WIFI_PASSWORD);
   pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
 
   sensor.addTag("device", "ESP32");
   if (client.validateConnection()) {
@@ -65,6 +66,9 @@ void loop() {
     int ledState = getLedState();
     Serial.print("LED state: ");
     Serial.println(ledState);
+    int buzzerState = getBuzzerState();
+    Serial.print("Buzzer state: ");
+    Serial.println(buzzerState);
 
     Serial.print("Temp: ");
     Serial.println(getTemperature());
@@ -157,6 +161,6 @@ void buzzerOn() {
 }
 
 void buzzerOff() {
-    digitalWrite(BUZZER_PIN, Low);
+    digitalWrite(BUZZER_PIN, LOW);
     server.send(200, "text/plain", "Buzzer is OFF");
 }
