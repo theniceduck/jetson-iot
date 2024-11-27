@@ -4,15 +4,17 @@ import requests
 from ultralytics import YOLO
 
 # ESP32 IP and endpoint
-esp32_ip = os.getenv('ESP32_IP')  # Use environment variable for ESP32's IP address
+esp32_ip = "http://191.168.0.131"  # Use environment variable for ESP32's IP address
 led_on_url = f"{esp32_ip}/ledon"
 led_off_url = f"{esp32_ip}/ledoff"
+buzzer_on_url = f"{esp32_ip}/buzzeron"
+buzzer_off_url = f"{esp32_ip}/buzzeroff"
 
 # Load YOLOv8 model
 model = YOLO('yolov8n.pt')
 
 # Specify the class ID to track (e.g., 0 for 'person')
-selected_class_id = 0  # Change this to track a different class
+selected_class_id = 39  # Change this to track a different class
 print(f"Tracking class: {model.names[selected_class_id]}")
 
 # Open webcam
@@ -48,12 +50,14 @@ try:
         if detection_counter == detection_cooldown and not object_detected:
             print(f"{model.names[selected_class_id]} detected, turning LED ON.")
             requests.get(led_on_url)
+            print(f"{model.names[selected_class_id]} detected, turning Buzzer ON.")
+            requests.get(buzzer_on_url)
             object_detected = True
 
         # Trigger LED OFF if the object is consistently not detected
         elif detection_counter == 0 and object_detected:
-            print(f"No {model.names[selected_class_id]} detected, turning LED OFF.")
-            requests.get(led_off_url)
+            print(f"No {model.names[selected_class_id]} detected, turning Buzzer OFF.")
+            requests.get(buzzer_off_url)
             object_detected = False
 
         # Display detections on the frame
@@ -72,6 +76,8 @@ except KeyboardInterrupt:
     if object_detected:
         requests.get(led_off_url)
         print("LED turned OFF.")
+        requests.get(buzzer_off_url)
+        print("Buzzer turned OFF.")
 
 finally:
     # Release the webcam and close OpenCV windows
