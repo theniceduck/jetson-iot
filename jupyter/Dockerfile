@@ -14,19 +14,6 @@ RUN wget https://github.com/arduino/arduino-cli/releases/download/v1.1.1/arduino
     apt-get remove --purge -y brltty && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip install pyserial
-
-# Clone, compile, and install the CH341SER driver
-RUN git clone https://github.com/juliagoda/CH341SER && \
-    cd CH341SER && \
-    make && \
-    make load && \
-    cp ch34x.ko /lib/modules/$(uname -r)/kernel/drivers/usb/serial/ && \
-    depmod -a && \
-    echo "ch34x" >> /etc/modules && \
-    cd .. && rm -rf CH341SER
-
 # Create Arduino CLI config directory
 RUN mkdir -p /home/jupyter/.arduino15
 
