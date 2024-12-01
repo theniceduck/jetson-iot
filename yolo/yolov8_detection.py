@@ -56,6 +56,8 @@ try:
 
         # Trigger LED OFF if the object is consistently not detected
         elif detection_counter == 0 and object_detected:
+            print(f"No {model.names[selected_class_id]} detected, turning LED OFF.")
+            requests.get(led_off_url)
             print(f"No {model.names[selected_class_id]} detected, turning Buzzer OFF.")
             requests.get(buzzer_off_url)
             object_detected = False
