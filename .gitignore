@@ -2,3 +2,4 @@
 config.h
 influxdb.cloud.config.h
 /jupyter/notebooks/training-module
+/mini-project

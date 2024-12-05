@@ -3,19 +3,37 @@ import cv2
 import requests
 from ultralytics import YOLO
 
-# ESP32 IP and endpoint
-esp32_ip = "http://191.168.0.131"  # Use environment variable for ESP32's IP address
-led_on_url = f"{esp32_ip}/ledon"
-led_off_url = f"{esp32_ip}/ledoff"
-buzzer_on_url = f"{esp32_ip}/buzzeron"
-buzzer_off_url = f"{esp32_ip}/buzzeroff"
+# Prompt user for ESP32 IP and port
+while True:
+    esp32_ip = input("Enter the ESP32 IP address (e.g., 192.168.0.131:80): ").strip()
+    if ":" in esp32_ip:
+        break
+    print("Invalid input. Please include the port number (e.g., 192.168.0.131:80).")
+
+# ESP32 endpoint URLs
+led_on_url = f"http://{esp32_ip}/ledon"
+led_off_url = f"http://{esp32_ip}/ledoff"
+buzzer_on_url = f"http://{esp32_ip}/buzzeron"
+buzzer_off_url = f"http://{esp32_ip}/buzzeroff"
 
 # Load YOLOv8 model
 model = YOLO('yolov8n.pt')
 
-# Specify the class ID to track (e.g., 0 for 'person')
-selected_class_id = 39  # Change this to track a different class
-print(f"Tracking class: {model.names[selected_class_id]}")
+# List COCO classes and prompt the user to select one
+print("\nAvailable COCO dataset classes:")
+for class_id, class_name in model.names.items():
+    print(f"{class_id}: {class_name}")
+
+while True:
+    try:
+        selected_class_id = int(input("\nEnter the class ID you want to track: "))
+        if selected_class_id in model.names:
+            print(f"Tracking class: {model.names[selected_class_id]}")
+            break
+        else:
+            print("Invalid class ID. Please enter a valid ID from the list above.")
+    except ValueError:
+        print("Invalid input. Please enter a numerical class ID.")
 
 # Open webcam
 cap = cv2.VideoCapture(0)
@@ -86,89 +104,3 @@ finally:
     cap.release()
     cv2.destroyAllWindows()
     print("Resources released. Goodbye!")
-
-"""
-# Classes
-names:
-  0: person
-  1: bicycle
-  2: car
-  3: motorcycle
-  4: airplane
-  5: bus
-  6: train
-  7: truck
-  8: boat
-  9: traffic light
-  10: fire hydrant
-  11: stop sign
-  12: parking meter
-  13: bench
-  14: bird
-  15: cat
-  16: dog
-  17: horse
-  18: sheep
-  19: cow
-  20: elephant
-  21: bear
-  22: zebra
-  23: giraffe
-  24: backpack
-  25: umbrella
-  26: handbag
-  27: tie
-  28: suitcase
-  29: frisbee
-  30: skis
-  31: snowboard
-  32: sports ball
-  33: kite
-  34: baseball bat
-  35: baseball glove
-  36: skateboard
-  37: surfboard
-  38: tennis racket
-  39: bottle
-  40: wine glass
-  41: cup
-  42: fork
-  43: knife
-  44: spoon
-  45: bowl
-  46: banana
-  47: apple
-  48: sandwich
-  49: orange
-  50: broccoli
-  51: carrot
-  52: hot dog
-  53: pizza
-  54: donut
-  55: cake
-  56: chair
-  57: couch
-  58: potted plant
-  59: bed
-  60: dining table
-  61: toilet
-  62: tv
-  63: laptop
-  64: mouse
-  65: remote
-  66: keyboard
-  67: cell phone
-  68: microwave
-  69: oven
-  70: toaster
-  71: sink
-  72: refrigerator
-  73: book
-  74: clock
-  75: vase
-  76: scissors
-  77: teddy bear
-  78: hair drier
-  79: toothbrush
-  
-"""
