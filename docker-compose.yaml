@@ -30,7 +30,7 @@ services:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
     environment:
       - ARDUINO_CLI_CONFIG=/home/jupyter/.arduino15/arduino-cli.yaml
-    command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/home/jovyan/work"]
+    command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/home/jovyan/work"]
 
 volumes:
   influxdb_data:
