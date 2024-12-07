@@ -141,7 +141,7 @@ void getData() {
     message += "Humidity: " + String(getHumidity()) + "%\n";
     message += "Elapsed Time: " + String(getElapsedTime()) + " hrs\n";
     message += "LED State: " + String(getLedState()) + "\n";
-    message += "LED State: " + String(getBuzzerState()) + "\n";
+    message += "Buzzer State: " + String(getBuzzerState()) + "\n";
     server.send(200, "text/plain; charset=utf-8", message);
 }
 
