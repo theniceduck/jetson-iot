@@ -59,10 +59,13 @@ void loop() {
 
     Serial.print("ESP32 IP Address: ");
     Serial.println(WiFi.localIP());
+    Serial.print("WebServer Port: ");
+    Serial.println(WebServerPort);
     
     Blynk.virtualWrite(VirtElapsedTime, getElapsedTime());
     Blynk.virtualWrite(VirtTemp, getTemperature());
     Blynk.virtualWrite(VirtHum, getHumidity());
+    
     int ledState = getLedState();
     Serial.print("LED state: ");
     Serial.println(ledState);
